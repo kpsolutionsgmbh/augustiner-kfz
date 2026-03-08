@@ -1,0 +1,14 @@
+# Augustiner KFZ Gutachten — robots.txt
+# https://augustiner-kfz.de/
+
+User-agent: *
+Allow: /
+Allow: /blog/
+Disallow: /impressum.html
+Disallow: /datenschutz.html
+
+# Sitemap
+Sitemap: https://augustiner-kfz.de/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
