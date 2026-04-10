@@ -87,8 +87,8 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
               <p className="mt-6 text-lg leading-8 text-pretty text-gray-300">
                 Durchschnittlich 6.890 € statt nur 2.100 € vom Versicherer. Jeder Tag ohne Gutachten kostet Sie bares Geld.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-                <button onClick={onOpen} className="btn-primary !rounded-xl">
+              <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:gap-x-6 lg:items-center lg:justify-start">
+                <button onClick={onOpen} className="btn-primary !rounded-xl w-full sm:w-auto">
                   Jetzt Gutachten sichern
                   <ArrowRight className="w-5 h-5" />
                 </button>
@@ -104,7 +104,7 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
                 </p>
               </div>
             </div>
-            <div className="relative mt-16 h-60 lg:h-80 lg:mt-8">
+            <div className="relative mt-16 h-72 lg:h-80 lg:mt-8">
               <img
                 width="1824"
                 height="1080"
