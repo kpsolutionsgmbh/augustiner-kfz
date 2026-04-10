@@ -82,10 +82,10 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
             </svg>
             <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
               <h2 className="text-3xl font-extrabold tracking-tight text-balance text-white sm:text-4xl">
-                Sichern Sie sich Ihre volle Entschädigung
+                Holen Sie sich, was Ihnen zusteht
               </h2>
               <p className="mt-6 text-lg leading-8 text-pretty text-gray-300">
-                Durchschnittlich 6.890 € — statt dem Versicherungsangebot von nur 2.100 €. Jeder Tag ohne Gutachten schwächt Ihre Position.
+                Durchschnittlich 6.890 € statt nur 2.100 € vom Versicherer. Jeder Tag ohne Gutachten kostet Sie bares Geld.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <button onClick={onOpen} className="btn-primary !rounded-xl">
@@ -94,8 +94,7 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
                 </button>
                 <a href="tel:+4915141621062" className="text-sm font-semibold text-white hover:text-gray-100 flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  24/7 anrufen
-                  <span aria-hidden="true">→</span>
+                  +49 1514 1621062
                 </a>
               </div>
               <div className="mt-6 flex items-center justify-center gap-3 lg:justify-start">
@@ -105,12 +104,12 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
                 </p>
               </div>
             </div>
-            <div className="relative mt-16 h-80 lg:mt-8">
+            <div className="relative mt-16 h-60 lg:h-80 lg:mt-8">
               <img
                 width="1824"
                 height="1080"
-                src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/VtOdbmMhXqgtbbAu.jpg"
-                alt="KFZ Gutachter bei der Arbeit"
+                src="/images/volkan-shooting.jpeg"
+                alt="Volkan bei der Schadenaufnahme"
                 className="absolute top-0 left-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10 object-cover"
               />
             </div>
@@ -124,7 +123,7 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
 /* ─── CTA Block 2 — Final-style with Avatar Circles ─── */
 function CTABlockSecondary({ onOpen }: { onOpen: () => void }) {
   return (
-    <section className="py-20 md:py-28 bg-[#0D0D0D] relative overflow-hidden">
+    <section className="py-14 md:py-28 bg-[#0D0D0D] relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(235,235,2,0.06)_0%,_transparent_60%)]" />
       <Particles className="absolute inset-0" quantity={25} color="#EBEB02" size={0.3} />
       <div className="container relative text-center">
@@ -134,8 +133,8 @@ function CTABlockSecondary({ onOpen }: { onOpen: () => void }) {
             <span className="text-[#EBEB02]">Holen Sie sie sich.</span>
           </h2>
           <p className="text-sm md:text-lg text-gray-400 max-w-xl mx-auto mb-8 md:mb-10">
-            Durchschnittlich 6.890 € — kostenlos, in 60 Sekunden gestartet.
-            Jeder Tag ohne Gutachten schwächt Ihre Position.
+            Durchschnittlich 6.890 €. Kostenlos, in 60 Sekunden gestartet.
+            Warten kostet Sie bares Geld.
           </p>
           <button onClick={onOpen} className="btn-primary text-base md:text-lg !px-8 md:!px-10 !py-4 md:!py-5 !rounded-2xl">
             Jetzt Entschädigung sichern
@@ -188,7 +187,7 @@ const testimonials = [
     car: "Mercedes E-Klasse · Auffahrunfall · Köln",
   },
   {
-    quote: "Die Versicherung wollte mich mit 2.200 € abspeisen. Dank Augustiner KFZ habe ich 5.890 € erhalten — fast das Dreifache!",
+    quote: "Die Versicherung wollte mich mit 2.200 € abspeisen. Dank Augustiner KFZ habe ich 5.890 € erhalten. Fast das Dreifache!",
     amount: "5.890 €",
     name: "Sarah L.",
     initials: "SL",
@@ -204,18 +203,20 @@ const testimonials = [
     car: "VW Tiguan · Frontschaden · Bonn",
   },
   {
-    quote: "In nur 7 Tagen hat Augustiner KFZ mir 6.200 € gesichert — statt der lächerlichen 1.500 € von der Versicherung.",
+    quote: "In nur 7 Tagen hat Augustiner KFZ mir 6.200 € gesichert. Statt der lächerlichen 1.500 € von der Versicherung.",
     amount: "6.200 €",
     name: "Aylin D.",
     initials: "AD",
     avatar: "https://randomuser.me/api/portraits/women/63.jpg",
-    car: "Audi A4 · Auffahrunfall · Leverkusen",
+    car: "Audi A6 · Auffahrunfall · Leverkusen",
   },
 ];
 
 export default function Home() {
   const [funnelOpen, setFunnelOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const heroRef = useRef<HTMLElement>(null);
+  const heroInView = useInView(heroRef, { margin: "0px" });
 
   // Auto-rotate testimonials
   useState(() => {
@@ -231,7 +232,7 @@ export default function Home() {
       <FunnelModal open={funnelOpen} onClose={() => setFunnelOpen(false)} />
 
       {/* ─── 1. HERO with Particles ─── */}
-      <section className="relative pt-24 pb-12 md:pt-36 md:pb-24 overflow-hidden">
+      <section ref={heroRef} className="relative pt-24 pb-12 md:pt-36 md:pb-24 overflow-hidden">
         {/* Subtle gradient background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#FAFACC]/20 via-white to-white pointer-events-none" />
         <Particles
@@ -265,7 +266,7 @@ export default function Home() {
 
               <FadeIn delay={0.2}>
                 <p className="text-sm md:text-lg text-[#4A4A4A] leading-relaxed mb-5 md:mb-6 max-w-lg">
-                  Finden Sie in nur wenigen Schritten heraus, wie hoch Ihr Anspruch auf Ihren Unfallschaden ist – in weniger als 60 Sekunden.
+                  Prüfen Sie in 60 Sekunden, wie viel Entschädigung Ihnen nach dem Unfall wirklich zusteht.
                 </p>
               </FadeIn>
 
@@ -295,7 +296,7 @@ export default function Home() {
                   </button>
                   <a href="tel:+4915141621062" className="btn-dark !py-3 md:!py-3.5 !px-5 md:!px-6 !text-sm">
                     <Phone className="w-4 h-4" />
-                    24/7 erreichbar
+                    +49 1514 1621062
                   </a>
                 </div>
               </FadeIn>
@@ -341,7 +342,7 @@ export default function Home() {
                 key={stat.label}
                 whileHover={{ y: -4, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 400 }}
-                className="relative bg-white/70 backdrop-blur-xl rounded-2xl p-5 border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] overflow-hidden group"
+                className="relative bg-white/70 backdrop-blur-xl rounded-2xl p-3 md:p-5 border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.6)] overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-[#EBEB02]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <ShineBorder shineColor={["#EBEB02", "#22C55E"]} borderWidth={1} duration={8} />
@@ -370,10 +371,8 @@ export default function Home() {
             { name: "BMW", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/gYMuMsjYvVXtnUmN.svg" },
             { name: "Volkswagen", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/cZnovLQLAKafjERL.svg" },
             { name: "Audi", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/WkuYlkKcWeRHpxso.svg" },
-            { name: "Porsche", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/tsADsMswvcPjgdok.svg" },
             { name: "Toyota", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/rctMSVzfcxHgkXhE.svg" },
             { name: "Ford", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/oeZablNWjwFAEHoX.svg" },
-            { name: "Opel", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/pCfQPWRouFkFIUXz.svg" },
           ].map((brand) => (
             <img
               key={brand.name}
@@ -408,16 +407,14 @@ export default function Home() {
                     transition={{ duration: 0.5 }}
                   >
                     <Quote className="w-10 h-10 text-[#EBEB02]/30 mx-auto mb-4" />
-                    <blockquote className="text-xl md:text-2xl font-bold text-white leading-relaxed mb-4">
+                    <blockquote className="text-lg md:text-2xl font-bold text-white leading-relaxed mb-4">
                       „{testimonials[activeTestimonial].quote}
                       {" "}<span className="text-[#EBEB02]">{testimonials[activeTestimonial].amount}</span>"
                     </blockquote>
                     <div className="flex items-center justify-center gap-3 mt-6">
-                      <img
-                        src={testimonials[activeTestimonial].avatar}
-                        alt={testimonials[activeTestimonial].name}
-                        className="w-12 h-12 rounded-full object-cover ring-2 ring-[#EBEB02]/50"
-                      />
+                      <div className="w-12 h-12 rounded-full bg-[#EBEB02]/20 flex items-center justify-center ring-2 ring-[#EBEB02]/50">
+                        <span className="text-sm font-bold text-[#EBEB02]">{testimonials[activeTestimonial].initials}</span>
+                      </div>
                       <div className="text-left">
                         <p className="text-sm font-semibold text-white">{testimonials[activeTestimonial].name}</p>
                         <p className="text-xs text-gray-500">{testimonials[activeTestimonial].car}</p>
@@ -452,11 +449,11 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Das Problem</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
                 Die Versicherung arbeitet nicht für Sie
               </h2>
-              <p className="text-lg text-[#4A4A4A] max-w-2xl mx-auto">
-                Nach einem Unfall stehen Sie unter Schock — und genau das nutzt die gegnerische Versicherung aus.
+              <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
+                Nach einem Unfall sind Sie im Nachteil. Die gegnerische Versicherung weiß das und nutzt es aus.
               </p>
             </div>
           </FadeIn>
@@ -465,7 +462,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-5">
             {/* Large card — spans 4 cols */}
             <ScaleIn delay={0} className="md:col-span-4">
-              <div className="group relative h-full min-h-0 md:min-h-[220px] rounded-2xl border border-[#E8E8E8] bg-gradient-to-br from-white to-[#FAFAFA] p-7 overflow-hidden hover:border-[#EBEB02]/50 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(235,235,2,0.1)]">
+              <div className="group relative h-full min-h-0 md:min-h-[220px] rounded-2xl border border-[#E8E8E8] bg-gradient-to-br from-white to-[#FAFAFA] p-5 md:p-7 overflow-hidden hover:border-[#EBEB02]/50 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(235,235,2,0.1)]">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-[#EF4444]/5 to-transparent rounded-bl-full" />
                 {/* Animated pulse circle */}
                 <motion.div
@@ -479,7 +476,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-[#0D0D0D] mb-3">Versicherung kürzt systematisch</h3>
                   <p className="text-sm md:text-base text-[#4A4A4A] leading-relaxed max-w-lg">
-                    Der Gutachter der Versicherung arbeitet für die Versicherung — nicht für Sie. Ergebnis: Tausende Euro weniger Entschädigung.
+                    Der Gutachter der Versicherung arbeitet für die Versicherung. Nicht für Sie. Ergebnis: Tausende Euro weniger Entschädigung.
                   </p>
                   {/* Animated counter showing money loss */}
                   <div className="mt-5 flex items-center gap-3">
@@ -502,7 +499,7 @@ export default function Home() {
                 </motion.div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Positionen verschwiegen</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Wertminderung, Nutzungsausfall, Mietwagenkosten — die Versicherung verschweigt Ihnen, was Ihnen zusteht.
+                  Wertminderung, Nutzungsausfall, Mietwagenkosten. Die Versicherung verschweigt Ihnen, was Ihnen zusteht.
                 </p>
                 {/* Animated strikethrough list */}
                 <div className="mt-4 space-y-1.5">
@@ -540,7 +537,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Zeitdruck wird aufgebaut</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Schnelle Angebote, schnelle Unterschrift — auf Ihre Kosten.
+                  Schnelle Angebote, schnelle Unterschrift. Auf Ihre Kosten.
                 </p>
               </div>
             </ScaleIn>
@@ -570,7 +567,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Kein faires Verfahren</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Die Versicherung hat Juristen und Gutachter. Sie stehen allein da — es sei denn, Sie holen sich einen Experten.
+                  Die Versicherung hat Juristen und Gutachter. Sie stehen allein da. Es sei denn, Sie holen sich einen Experten.
                 </p>
                 {/* Animated scale tipping */}
                 <motion.div
@@ -595,10 +592,10 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Unsere Lösung</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
-                Wir übernehmen alles — Sie lehnen sich zurück
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
+                Wir übernehmen alles. Sie lehnen sich zurück.
               </h2>
-              <p className="text-lg text-[#4A4A4A] max-w-2xl mx-auto">
+              <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
                 Von der Schadenaufnahme bis zur Auszahlung. Kostenlos. Komplett.
               </p>
             </div>
@@ -609,7 +606,7 @@ export default function Home() {
               {
                 icon: FileCheck,
                 title: "Kostenloses Unfallgutachten",
-                desc: "Professionelles Gutachten mit allen 16 regulierbaren Schadenspositionen — rechtlich belastbar und gerichtsfest. Die Versicherung zahlt.",
+                desc: "Professionelles Gutachten mit allen 16 regulierbaren Schadenspositionen. Rechtlich belastbar und gerichtsfest. Die Versicherung zahlt.",
                 tag: "0 € für Sie",
                 shiny: true,
               },
@@ -623,14 +620,14 @@ export default function Home() {
               {
                 icon: Scale,
                 title: "Kostenloser Anwalt bei Bedarf",
-                desc: "Wenn die Versicherung nicht zahlt, schalten wir einen spezialisierten Verkehrsrechtsanwalt ein — für Sie kostenlos (§ 249 BGB).",
+                desc: "Wenn die Versicherung nicht zahlt, schalten wir einen spezialisierten Verkehrsrechtsanwalt ein. Für Sie kostenlos (§ 249 BGB).",
                 tag: "Kostenlos",
                 shiny: false,
               },
               {
                 icon: Clock,
                 title: "Schadenaufnahme in 24 Stunden",
-                desc: "Innerhalb von 24 Stunden kommt unser Gutachter zu Ihnen — an Ihren Standort, zu Ihrer Wunschzeit. Auszahlung in Ø 7–19 Tagen.",
+                desc: "Innerhalb von 24 Stunden kommt unser Gutachter zu Ihnen. An Ihren Standort, zu Ihrer Wunschzeit. Auszahlung in Ø 7 bis 19 Tagen.",
                 tag: "24/7 erreichbar",
                 shiny: false,
               },
@@ -690,11 +687,11 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>So funktioniert's</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
                 In 3 Schritten zu Ihrer Entschädigung
               </h2>
-              <p className="text-lg text-[#4A4A4A] max-w-2xl mx-auto">
-                Wir nehmen Ihnen alles ab — Sie müssen nur den ersten Schritt machen.
+              <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
+                Wir nehmen Ihnen alles ab. Sie machen nur den ersten Schritt.
               </p>
             </div>
           </FadeIn>
@@ -709,12 +706,12 @@ export default function Home() {
               {
                 step: "02",
                 title: "Gutachten & Abwicklung",
-                desc: "Unser Master-Ingenieur erstellt das Gutachten vor Ort. Wir übernehmen die komplette Versicherungskommunikation — inkl. Anwalt.",
+                desc: "Unser Master-Ingenieur erstellt das Gutachten vor Ort. Wir übernehmen die komplette Versicherungskommunikation, inklusive Anwalt.",
               },
               {
                 step: "03",
                 title: "Auszahlung erhalten",
-                desc: "Durchschnittlich 6.890 € auf Ihr Konto — in Ø 7–19 Tagen. 35 % mehr als das Versicherungsangebot.",
+                desc: "Durchschnittlich 6.890 € auf Ihr Konto. In Ø 7 bis 19 Tagen. 35 % mehr als das Versicherungsangebot.",
               },
             ].map((item, i) => (
               <FadeIn key={item.step} delay={i * 0.15}>
@@ -747,10 +744,10 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Der Unterschied</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-white mt-4 mb-4">
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-white mt-4 mb-4">
                 Versicherungs-Gutachter vs. Augustiner KFZ
               </h2>
-              <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              <p className="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto">
                 Sehen Sie selbst, warum ein unabhängiges Gutachten Tausende Euro Unterschied macht.
               </p>
             </div>
@@ -761,14 +758,14 @@ export default function Home() {
               <ShineBorder shineColor={["#22C55E", "#EBEB02"]} borderWidth={1} duration={12} />
               {/* Header */}
               <div className="grid grid-cols-3 bg-white/5">
-                <div className="p-2.5 md:p-4 text-[10px] md:text-sm font-bold text-gray-400">Kriterium</div>
-                <div className="p-2.5 md:p-4 text-[10px] md:text-sm font-bold text-[#EF4444] text-center">
+                <div className="p-2.5 md:p-4 text-[11px] md:text-sm font-bold text-gray-400">Kriterium</div>
+                <div className="p-2.5 md:p-4 text-[11px] md:text-sm font-bold text-[#EF4444] text-center">
                   <span className="inline-flex items-center gap-1 md:gap-1.5">
                     <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#EF4444] inline-block" />
                     <span className="hidden sm:inline">Versicherungs-</span>Gutachter
                   </span>
                 </div>
-                <div className="p-2.5 md:p-4 text-[10px] md:text-sm font-bold text-[#22C55E] text-center">
+                <div className="p-2.5 md:p-4 text-[11px] md:text-sm font-bold text-[#22C55E] text-center">
                   <span className="inline-flex items-center gap-1 md:gap-1.5">
                     <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-[#22C55E] inline-block" />
                     Augustiner KFZ
@@ -780,7 +777,7 @@ export default function Home() {
                 { label: "Ø Entschädigung", bad: "2.100 € (gekürzt)", good: "6.890 € (vollständig)" },
                 { label: "Schadenspositionen", bad: "Minimal", good: "Alle 16 Positionen" },
                 { label: "Versicherungs-Kommunikation", bad: "Sie selbst", good: "Wir übernehmen alles" },
-                { label: "Anwalt inklusive", bad: "Nein", good: "Ja — kostenlos" },
+                { label: "Anwalt inklusive", bad: "Nein", good: "Ja, kostenlos" },
                 { label: "Kosten für Sie", bad: "Tausende € weniger", good: "0 €" },
               ].map((row, i) => (
                 <motion.div
@@ -791,13 +788,13 @@ export default function Home() {
                   transition={{ delay: 0.3 + i * 0.08 }}
                   className={`grid grid-cols-3 ${i % 2 === 0 ? "bg-white/[0.02]" : ""} hover:bg-white/[0.05] transition-colors`}
                 >
-                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm font-semibold text-white">{row.label}</div>
-                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm text-gray-500 text-center flex items-center justify-center gap-1 md:gap-1.5 relative">
+                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm font-semibold text-white leading-tight">{row.label}</div>
+                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm text-gray-500 text-center flex items-center justify-center gap-1 md:gap-1.5 leading-tight relative">
                     <div className="absolute inset-0 bg-[#EF4444]/[0.03]" />
                     <XCircle className="w-3 h-3 md:w-4 md:h-4 text-[#EF4444] shrink-0 relative" />
                     <span className="relative">{row.bad}</span>
                   </div>
-                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm text-white text-center flex items-center justify-center gap-1 md:gap-1.5 relative">
+                  <div className="p-2.5 md:p-4 text-[11px] md:text-sm text-white text-center flex items-center justify-center gap-1 md:gap-1.5 leading-tight relative">
                     <div className="absolute inset-0 bg-[#22C55E]/[0.03]" />
                     <Check className="w-3 h-3 md:w-4 md:h-4 text-[#22C55E] shrink-0 relative" />
                     <span className="font-semibold relative">{row.good}</span>
@@ -817,8 +814,8 @@ export default function Home() {
               <div className="relative">
                 <img
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/VfFEuiRZHnDOBbQj.jpeg"
-                  alt="Volkan — Gründer Augustiner KFZ"
-                  className="rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.12)] w-full object-cover aspect-[4/5]"
+                  alt="Volkan, Gründer Augustiner KFZ"
+                  className="rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.12)] w-full object-cover aspect-[4/3] md:aspect-[4/5]"
                 />
                 <div className="absolute -bottom-4 -right-4 bg-[#EBEB02] rounded-xl px-5 py-3 shadow-lg">
                   <p className="text-sm font-extrabold text-[#0D0D0D]">Master-Ingenieur</p>
@@ -830,14 +827,14 @@ export default function Home() {
             <FadeIn delay={0.2}>
               <div>
                 <SectionLabel>Ihr Gutachter</SectionLabel>
-                <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-6">
-                  Volkan — Master-Ingenieur & Gründer
+                <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-6">
+                  Volkan, Master-Ingenieur & Gründer
                 </h2>
                 <div className="space-y-4 mb-8">
                   {[
                     { icon: GraduationCap, text: "Master in Automotive Engineering" },
                     { icon: Award, text: "Abschluss bei Prof. Ferdinand Dudenhöffer" },
-                    { icon: BadgeCheck, text: "Unabhängig — keinerlei Verträge mit Versicherungen" },
+                    { icon: BadgeCheck, text: "Unabhängig. Keinerlei Verträge mit Versicherungen." },
                     { icon: MapPin, text: "Köln & ganz NRW" },
                   ].map(({ icon: Icon, text }) => (
                     <div key={text} className="flex items-center gap-3">
@@ -849,8 +846,7 @@ export default function Home() {
                   ))}
                 </div>
                 <blockquote className="border-l-4 border-[#EBEB02] pl-4 text-[#4A4A4A] italic text-sm leading-relaxed">
-                  „Die Versicherung bietet Ihnen immer das Minimum an. Mein Job ist es, sicherzustellen,
-                  dass Sie das Maximum bekommen — das, was Ihnen rechtlich zusteht."
+                  „Die Versicherung bietet immer das Minimum. Mein Job: sicherstellen, dass Sie das bekommen, was Ihnen rechtlich zusteht."
                 </blockquote>
               </div>
             </FadeIn>
@@ -867,16 +863,16 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Echte Ergebnisse</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
                 Was unsere Kunden tatsächlich erhalten haben
               </h2>
-              <p className="text-lg text-[#4A4A4A] max-w-2xl mx-auto">
-                Dokumentierte Fälle mit echten Zahlen — keine leeren Versprechen.
+              <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
+                Dokumentierte Fälle mit echten Zahlen. Keine leeren Versprechen.
               </p>
             </div>
           </FadeIn>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {[
               {
                 car: "Mercedes E-Klasse",
@@ -885,6 +881,7 @@ export default function Home() {
                 insurance: 1800,
                 days: "12 Tage",
                 name: "Mehmet K.",
+                image: "/images/eklasse.jpeg",
               },
               {
                 car: "BMW 430d",
@@ -893,6 +890,7 @@ export default function Home() {
                 insurance: 2200,
                 days: "9 Tage",
                 name: "Sarah L.",
+                image: "/images/bmw430d.jpeg",
               },
               {
                 car: "VW Tiguan",
@@ -901,14 +899,16 @@ export default function Home() {
                 insurance: 2800,
                 days: "14 Tage",
                 name: "Thomas W.",
+                image: "/images/vwtiguan.jpeg",
               },
               {
-                car: "Audi A4",
+                car: "Audi A6",
                 type: "Auffahrunfall",
                 amount: 6200,
                 insurance: 1500,
                 days: "7 Tage",
                 name: "Aylin D.",
+                image: "/images/audia6.jpeg",
               },
             ].map((c, i) => (
               <FadeIn key={c.name} delay={i * 0.1}>
@@ -918,24 +918,31 @@ export default function Home() {
                   className="relative bg-white rounded-2xl border border-[#E8E8E8] overflow-hidden group"
                 >
                   <ShineBorder shineColor={["#22C55E", "#EBEB02"]} borderWidth={1} duration={12} />
-                  <div className="bg-[#111111] p-5 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#EBEB02]/5" />
-                    <p className="text-xs font-bold uppercase tracking-wider text-gray-500 relative">{c.type}</p>
-                    <p className="text-white font-bold mt-1 relative">{c.car}</p>
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={c.image}
+                      alt={`${c.car} ${c.type}`}
+                      className="w-full h-28 md:h-40 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#111111] to-transparent" />
+                    <div className="absolute bottom-0 left-0 p-2.5 md:p-4">
+                      <p className="text-[9px] md:text-xs font-bold uppercase tracking-wider text-gray-400">{c.type}</p>
+                      <p className="text-white font-bold mt-0.5 text-xs md:text-base">{c.car}</p>
+                    </div>
                   </div>
-                  <div className="p-5">
+                  <div className="p-3 md:p-5">
                     <div className="flex items-baseline gap-1 mb-1">
-                      <span className="text-2xl font-black text-[#22C55E]">
+                      <span className="text-lg md:text-2xl font-black text-[#22C55E]">
                         <NumberTicker value={c.amount} />{" "}€
                       </span>
                     </div>
-                    <p className="text-xs text-[#767676] mb-3">
-                      statt <span className="line-through text-[#EF4444]">{c.insurance.toLocaleString("de-DE")} €</span> (Versicherungsangebot)
+                    <p className="text-[10px] md:text-xs text-[#767676] mb-2 md:mb-3">
+                      statt <span className="line-through text-[#EF4444]">{c.insurance.toLocaleString("de-DE")} €</span> <span className="hidden md:inline">(Versicherungsangebot)</span>
                     </p>
                     {/* Visual bar showing difference */}
-                    <div className="space-y-1.5 mb-4">
+                    <div className="space-y-1.5 mb-3 md:mb-4">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-[#767676] w-16 shrink-0">Versicherer</span>
+                        <span className="text-[10px] text-[#767676] w-12 md:w-16 shrink-0">Versicherer</span>
                         <div className="flex-1 h-1.5 bg-[#F7F7F7] rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
@@ -947,7 +954,7 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-[#767676] w-16 shrink-0">Augustiner</span>
+                        <span className="text-[10px] text-[#767676] w-12 md:w-16 shrink-0">Augustiner</span>
                         <div className="flex-1 h-1.5 bg-[#F7F7F7] rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
@@ -959,9 +966,9 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between text-xs text-[#4A4A4A] pt-3 border-t border-[#F0F0F0]">
+                    <div className="flex items-center justify-between text-[10px] md:text-xs text-[#4A4A4A] pt-2 md:pt-3 border-t border-[#F0F0F0]">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3.5 h-3.5" /> {c.days}
+                        <Clock className="w-3 h-3 md:w-3.5 md:h-3.5" /> {c.days}
                       </span>
                       <span className="font-medium">{c.name}</span>
                     </div>
@@ -979,7 +986,7 @@ export default function Home() {
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Häufige Fragen</SectionLabel>
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
+              <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
                 Alles, was Sie wissen müssen
               </h2>
             </div>
@@ -991,19 +998,19 @@ export default function Home() {
                 {[
                   {
                     q: "Ist das Gutachten wirklich kostenlos?",
-                    a: "Ja, zu 100 %. Nach § 249 BGB und BGH Az. VI ZR 357/13 muss die gegnerische Versicherung die Kosten für das Unfallgutachten übernehmen. Ihnen entstehen keinerlei Kosten — nicht beim Gutachten, nicht beim Anwalt, nicht bei der gesamten Abwicklung.",
+                    a: "Ja, zu 100 %. Nach § 249 BGB und BGH Az. VI ZR 357/13 muss die gegnerische Versicherung die Kosten für das Unfallgutachten übernehmen. Ihnen entstehen keinerlei Kosten. Nicht beim Gutachten, nicht beim Anwalt, nicht bei der gesamten Abwicklung.",
                   },
                   {
                     q: "Warum bekomme ich mehr als das Versicherungsangebot?",
-                    a: "Die Versicherung setzt auf ihren eigenen Gutachter, der systematisch Positionen weglässt — Wertminderung, Nutzungsausfall, Mietwagenkosten. Unser Gutachten erfasst alle 16 regulierbaren Schadenspositionen. Das Ergebnis: durchschnittlich 35 % mehr Entschädigung.",
+                    a: "Die Versicherung setzt auf ihren eigenen Gutachter, der systematisch Positionen weglässt. Wertminderung, Nutzungsausfall, Mietwagenkosten. Unser Gutachten erfasst alle 16 regulierbaren Schadenspositionen. Das Ergebnis: durchschnittlich 35 % mehr Entschädigung.",
                   },
                   {
                     q: "Wie lange dauert die gesamte Abwicklung?",
-                    a: "Die Schadenaufnahme erfolgt innerhalb von 24 Stunden. Das Gutachten ist in 2–3 Werktagen fertig. Die Auszahlung durch die Versicherung dauert im Schnitt 7–19 Tage — abhängig von der Versicherung.",
+                    a: "Die Schadenaufnahme erfolgt innerhalb von 24 Stunden. Das Gutachten ist in 2 bis 3 Werktagen fertig. Die Auszahlung durch die Versicherung dauert im Schnitt 7 bis 19 Tage, abhängig von der Versicherung.",
                   },
                   {
                     q: "Muss ich selbst mit der Versicherung kommunizieren?",
-                    a: "Nein. Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Bei Bedarf schalten wir zusätzlich einen spezialisierten Verkehrsrechtsanwalt ein — für Sie kostenlos.",
+                    a: "Nein. Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Bei Bedarf schalten wir zusätzlich einen spezialisierten Verkehrsrechtsanwalt ein. Für Sie kostenlos.",
                   },
                   {
                     q: "Kann ich den Gutachter frei wählen?",
@@ -1011,7 +1018,7 @@ export default function Home() {
                   },
                   {
                     q: "Was passiert, wenn die Versicherung nicht zahlt?",
-                    a: "Dann schalten wir einen spezialisierten Verkehrsrechtsanwalt ein, der Ihre Ansprüche gerichtlich durchsetzt. Auch diese Kosten werden von der gegnerischen Versicherung getragen — Ihnen entstehen keine Kosten.",
+                    a: "Dann schalten wir einen spezialisierten Verkehrsrechtsanwalt ein, der Ihre Ansprüche gerichtlich durchsetzt. Auch diese Kosten werden von der gegnerischen Versicherung getragen. Ihnen entstehen keine Kosten.",
                   },
                   {
                     q: "Sind Sie wirklich unabhängig?",
@@ -1038,18 +1045,17 @@ export default function Home() {
       </section>
 
       {/* ─── 11. FINAL CTA with Particles ─── */}
-      <section className="py-20 md:py-32 bg-[#0D0D0D] relative overflow-hidden">
+      <section className="py-14 md:py-32 bg-[#0D0D0D] relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(235,235,2,0.08)_0%,_transparent_60%)]" />
         <Particles className="absolute inset-0" quantity={40} color="#EBEB02" size={0.4} />
         <div className="container relative text-center">
           <FadeIn>
             <h2 className="text-2xl md:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
-              Ihre Entschädigung wartet.<br />
-              <span className="text-[#EBEB02]">Holen Sie sie sich.</span>
+              Sie haben Anspruch auf mehr.<br />
+              <span className="text-[#EBEB02]">Lassen Sie sich das nicht nehmen.</span>
             </h2>
             <p className="text-sm md:text-lg text-gray-400 max-w-xl mx-auto mb-8 md:mb-10">
-              Durchschnittlich 6.890 € — kostenlos, in 60 Sekunden gestartet.
-              Jeder Tag ohne Gutachten schwächt Ihre Position.
+              Kostenloses Gutachten. In 60 Sekunden gestartet. Durchschnittlich 6.890 €.
             </p>
             <button onClick={() => setFunnelOpen(true)} className="btn-primary text-lg md:text-xl !px-10 md:!px-12 !py-5 md:!py-6 !rounded-2xl">
               Jetzt Entschädigung sichern
@@ -1076,7 +1082,7 @@ export default function Home() {
       </section>
 
       {/* ─── 12. FOOTER ─── */}
-      <footer className="py-10 bg-[#0A0A0A] border-t border-white/5">
+      <footer className="py-10 pb-24 md:pb-10 bg-[#0A0A0A] border-t border-white/5">
         <div className="container">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex flex-col items-center md:items-start gap-1">
@@ -1093,12 +1099,22 @@ export default function Home() {
       </footer>
 
       {/* ─── STICKY MOBILE CTA ─── */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white/95 backdrop-blur-xl border-t border-[#E8E8E8] px-4 py-3">
-        <button onClick={() => setFunnelOpen(true)} className="btn-primary w-full !rounded-xl !py-3.5">
-          Jetzt Gutachten sichern
-          <ArrowRight className="w-5 h-5" />
-        </button>
-      </div>
+      <AnimatePresence>
+        {!heroInView && (
+          <motion.div
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-white/95 backdrop-blur-xl border-t border-[#E8E8E8] px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+          >
+            <a href="tel:+4915141621062" className="btn-primary w-full !rounded-xl !py-3.5 text-center">
+              <Phone className="w-5 h-5" />
+              Jetzt anrufen
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -109,3 +109,4 @@ temp/
 .webdev/
 full-page.png
 .playwright-mcp/
+.vercel
