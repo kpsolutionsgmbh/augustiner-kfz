@@ -67,7 +67,7 @@ const satisfiedCustomerAvatars = [
 /* ─── CTA Block 1 — Tailwind Dark with Image ─── */
 function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
   return (
-    <section className="bg-[#0D0D0D]">
+    <section className="hidden md:block bg-[#0D0D0D]">
       <div className="container py-16 sm:py-20">
         <FadeIn>
           <div className="relative isolate overflow-hidden bg-[#1A1A1A] px-6 pt-16 ring-1 ring-white/10 sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
@@ -640,7 +640,7 @@ export default function Home() {
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 400 }}
-                  className="relative flex gap-5 p-6 rounded-2xl border border-[#E8E8E8] bg-white hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] transition-all duration-300 h-full overflow-hidden min-w-0"
+                  className="relative flex gap-4 p-4 md:gap-5 md:p-6 rounded-2xl border border-[#E8E8E8] bg-white hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] transition-all duration-300 h-full overflow-hidden min-w-0"
                 >
                   <ShineBorder shineColor={["#EBEB02", "#22C55E", "#EBEB02"]} borderWidth={1} duration={10} />
                   <div className="w-12 h-12 rounded-xl bg-[#EBEB02] flex items-center justify-center shrink-0">
@@ -819,7 +819,7 @@ export default function Home() {
                 <img
                   src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/VfFEuiRZHnDOBbQj.jpeg"
                   alt="Volkan, Gründer Augustiner KFZ"
-                  className="rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.12)] w-full object-cover aspect-[4/3] md:aspect-[4/5]"
+                  className="rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.12)] w-full object-cover object-top aspect-[3/4] md:aspect-[4/5]"
                 />
                 <div className="absolute -bottom-4 -right-4 bg-[#EBEB02] rounded-xl px-5 py-3 shadow-lg">
                   <p className="text-sm font-extrabold text-[#0D0D0D]">Master-Ingenieur</p>

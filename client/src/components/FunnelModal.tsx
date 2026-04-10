@@ -75,7 +75,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-5 bg-black/60 backdrop-blur-sm"
           onClick={(e) => e.target === e.currentTarget && handleClose()}
         >
           <motion.div
@@ -117,17 +117,17 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#767676] mb-2">Schritt 1 von 4</p>
                     <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0D] mb-1">Was ist passiert?</h3>
                     <p className="text-sm text-[#767676] mb-6">Wählen Sie die Art des Unfalls aus.</p>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-2.5">
                       {ACCIDENT_TYPES.map((type) => (
                         <button
                           key={type.id}
                           onClick={() => { setAccidentType(type.id); setStep(1); }}
-                          className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all text-left hover:border-[#EBEB02] hover:bg-[#FAFACC]/30 ${
+                          className={`flex items-center gap-2.5 p-3 rounded-xl border-2 transition-all text-left hover:border-[#EBEB02] hover:bg-[#FAFACC]/30 ${
                             accidentType === type.id ? "border-[#EBEB02] bg-[#FAFACC]/30" : "border-[#E8E8E8]"
                           }`}
                         >
-                          <span className="text-2xl">{type.icon}</span>
-                          <span className="text-sm font-semibold text-[#1A1A1A]">{type.label}</span>
+                          <span className="text-xl shrink-0">{type.icon}</span>
+                          <span className="text-[13px] font-semibold text-[#1A1A1A] leading-tight">{type.label}</span>
                         </button>
                       ))}
                     </div>
