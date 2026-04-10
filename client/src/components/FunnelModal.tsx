@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Car, Clock, Shield, ChevronRight, CheckCircle2, Loader2, Phone } from "lucide-react";
+import { X, Car, Clock, Shield, ChevronRight, CheckCircle2, Loader2, Phone, User, Mail } from "lucide-react";
 
 interface FunnelModalProps {
   open: boolean;
@@ -36,7 +36,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
   const [fault, setFault] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
@@ -47,7 +47,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
     setFault("");
     setName("");
     setPhone("");
-    setMessage("");
+    setEmail("");
     setLoading(false);
     setDone(false);
   };
@@ -210,33 +210,42 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">Name *</label>
-                        <input
-                          type="text"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="Ihr vollständiger Name"
-                          className="w-full px-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
-                        />
+                        <div className="relative">
+                          <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#767676]" />
+                          <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Ihr vollständiger Name"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">Telefonnummer *</label>
-                        <input
-                          type="tel"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="+49 ..."
-                          className="w-full px-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
-                        />
+                        <div className="relative">
+                          <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#767676]" />
+                          <input
+                            type="tel"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                            placeholder="+49 ..."
+                            className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">Nachricht (optional)</label>
-                        <textarea
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                          placeholder="Kurze Beschreibung des Unfalls..."
-                          rows={3}
-                          className="w-full px-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors resize-none"
-                        />
+                        <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">E-Mail (optional)</label>
+                        <div className="relative">
+                          <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#767676]" />
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Ihre E-Mail-Adresse"
+                            className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
+                          />
+                        </div>
                       </div>
                       <button
                         onClick={handleSubmit}

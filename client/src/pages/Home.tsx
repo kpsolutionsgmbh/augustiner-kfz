@@ -108,8 +108,8 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
               <img
                 width="1824"
                 height="1080"
-                src="/images/volkan-shooting.jpeg"
-                alt="Volkan bei der Schadenaufnahme"
+                src="/images/volkan-arbeit.jpeg"
+                alt="Volkan bei der Arbeit am Fahrzeug"
                 className="absolute top-0 left-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10 object-cover"
               />
             </div>
@@ -140,6 +140,10 @@ function CTABlockSecondary({ onOpen }: { onOpen: () => void }) {
             Jetzt Entschädigung sichern
             <ArrowRight className="w-5 h-5" />
           </button>
+          <a href="tel:+4915141621062" className="mt-4 text-sm text-gray-400 hover:text-white transition-colors flex items-center justify-center gap-2">
+            <Phone className="w-4 h-4" />
+            +49 1514 1621062
+          </a>
           {/* Avatar Circles — social proof */}
           <div className="mt-8 flex flex-col items-center gap-3">
             <AvatarCircles avatarUrls={satisfiedCustomerAvatars} numPeople={74} className="justify-center" />
@@ -587,7 +591,7 @@ export default function Home() {
       <CTABlockPrimary onOpen={() => setFunnelOpen(true)} />
 
       {/* ─── 5. VALUE / LEISTUNGEN — Shine Border Cards ─── */}
-      <section id="leistungen" className="py-12 md:py-24 bg-white">
+      <section id="leistungen" className="py-12 md:py-24 bg-white overflow-hidden">
         <div className="container">
           <FadeIn>
             <div className="text-center mb-8 md:mb-16">
@@ -636,14 +640,14 @@ export default function Home() {
                 <motion.div
                   whileHover={{ y: -4 }}
                   transition={{ type: "spring", stiffness: 400 }}
-                  className="relative flex gap-5 p-6 rounded-2xl border border-[#E8E8E8] bg-white hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] transition-all duration-300 h-full overflow-hidden"
+                  className="relative flex gap-5 p-6 rounded-2xl border border-[#E8E8E8] bg-white hover:shadow-[0_16px_48px_rgba(0,0,0,0.08)] transition-all duration-300 h-full overflow-hidden min-w-0"
                 >
                   <ShineBorder shineColor={["#EBEB02", "#22C55E", "#EBEB02"]} borderWidth={1} duration={10} />
                   <div className="w-12 h-12 rounded-xl bg-[#EBEB02] flex items-center justify-center shrink-0">
                     <value.icon className="w-6 h-6 text-[#0D0D0D]" />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-[#0D0D0D] mb-1">{value.title}</h3>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-bold text-[#0D0D0D] mb-1 break-words">{value.title}</h3>
                     <p className="text-sm text-[#4A4A4A] leading-relaxed mb-3">{value.desc}</p>
                     <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#22C55E] bg-[#22C55E]/10 px-3 py-1 rounded-full">
                       <CheckCircle2 className="w-3.5 h-3.5" />
@@ -922,7 +926,7 @@ export default function Home() {
                     <img
                       src={c.image}
                       alt={`${c.car} ${c.type}`}
-                      className="w-full h-28 md:h-40 object-cover"
+                      className="w-full h-40 md:h-52 object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111111] to-transparent" />
                     <div className="absolute bottom-0 left-0 p-2.5 md:p-4">
@@ -1110,7 +1114,7 @@ export default function Home() {
           >
             <a href="tel:+4915141621062" className="btn-primary w-full !rounded-xl !py-3.5 text-center">
               <Phone className="w-5 h-5" />
-              Jetzt anrufen
+              +49 1514 1621062
             </a>
           </motion.div>
         )}
