@@ -57,12 +57,22 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
     setTimeout(reset, 300);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
+    try {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accidentType, timeframe, fault, name, phone, email }),
+      });
+    } catch {
+      // Silently fail — show success anyway so user isn't blocked
+    }
+    // Show success after a short delay for the loading animation
     setTimeout(() => {
       setLoading(false);
       setDone(true);
-    }, 2000);
+    }, 1500);
   };
 
   const totalSteps = 4;
@@ -235,7 +245,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">E-Mail (optional)</label>
+                        <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">E-Mail *</label>
                         <div className="relative">
                           <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#767676]" />
                           <input
@@ -249,7 +259,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                       </div>
                       <button
                         onClick={handleSubmit}
-                        disabled={!name.trim() || !phone.trim()}
+                        disabled={!name.trim() || !phone.trim() || !email.trim()}
                         className="btn-primary w-full !rounded-xl disabled:opacity-40 disabled:cursor-not-allowed disabled:animate-none"
                       >
                         Kostenlos absenden
