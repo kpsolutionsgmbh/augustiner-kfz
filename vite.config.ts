@@ -21,5 +21,12 @@ export default defineConfig({
     port: 3000,
     strictPort: false,
     host: true,
+    proxy: {
+      "/api": {
+        target: "https://augustiner-kfz-live-projekt.vercel.app",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
   },
 });
