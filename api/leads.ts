@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { getDb, initDb } from "./_db.js";
 import { verifyToken } from "./_auth.js";
+import { sendLeadMail } from "./_mail.js";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
@@ -18,6 +19,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         INSERT INTO leads (accident_type, timeframe, fault, name, phone, email)
         VALUES (${accidentType}, ${timeframe}, ${fault}, ${name}, ${phone}, ${email})
       `;
+
+      // Lead is saved; a mail failure must not break the funnel for the user.
+      try {
+        await sendLeadMail({ accidentType, timeframe, fault, name, phone, email });
+      } catch (mailErr) {
+        console.error("Lead mail failed:", mailErr);
+      }
 
       return res.status(201).json({ success: true });
     }
