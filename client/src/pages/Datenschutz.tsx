@@ -91,10 +91,10 @@ export default function Datenschutz() {
             Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
           </p>
           <p>
-            Augustiner Ingenieurbüro<br />
+            AUGUSTINER KFZ-Gutachten<br />
             Volkan Kedik<br />
-            Karmeliterstraße 86<br />
-            53229 Bonn
+            Augustastraße 5b<br />
+            53721 Siegburg
           </p>
           <p>
             Telefon: 0151 41621062<br />

@@ -18,11 +18,11 @@ export default function Impressum() {
       {/* Content */}
       <div className="container py-12 md:py-16">
         <div className="max-w-3xl prose prose-sm md:prose-base prose-neutral">
-          <h2>AUGUSTINER Ingenieurbüro</h2>
+          <h2>AUGUSTINER KFZ-Gutachten</h2>
           <p>
             Volkan Kedik<br />
-            Karmeliterstraße 86<br />
-            53229 Bonn
+            Augustastraße 5b<br />
+            53721 Siegburg
           </p>
 
           <h2>Kontakt</h2>
@@ -45,10 +45,10 @@ export default function Impressum() {
 
           <h2>Redaktionell verantwortlich</h2>
           <p>
-            Augustiner Ingenieurbüro<br />
+            AUGUSTINER KFZ-Gutachten<br />
             Volkan Kedik<br />
-            Karmeliterstraße 86<br />
-            53229 Bonn
+            Augustastraße 5b<br />
+            53721 Siegburg
           </p>
 
           <h2>EU-Streitschlichtung</h2>
