@@ -253,17 +253,6 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text */}
             <div>
-              <FadeIn>
-                <div className="flex items-center gap-2 mb-4 md:mb-6">
-                  <div className="flex items-center gap-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#EBEB02] text-[#EBEB02]" />
-                    ))}
-                  </div>
-                  <span className="text-sm font-semibold text-[#4A4A4A]">5.0 · 74+ Google-Bewertungen</span>
-                </div>
-              </FadeIn>
-
               <FadeIn delay={0.1}>
                 <h1 className="text-2xl md:text-[clamp(28px,3.2vw,42px)] font-black leading-[1.15] text-[#0D0D0D] mb-4 md:mb-5">
                   Autounfall? Jetzt kostenloses KFZ-Gutachten sichern!
