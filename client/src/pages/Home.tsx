@@ -57,11 +57,11 @@ function ScaleIn({ children, className, delay = 0 }: { children: React.ReactNode
 
 /* ─── Satisfied Customers Avatars ─── */
 const satisfiedCustomerAvatars = [
-  { imageUrl: "https://randomuser.me/api/portraits/men/32.jpg", profileUrl: "#" },
-  { imageUrl: "https://randomuser.me/api/portraits/women/44.jpg", profileUrl: "#" },
-  { imageUrl: "https://randomuser.me/api/portraits/men/52.jpg", profileUrl: "#" },
-  { imageUrl: "https://randomuser.me/api/portraits/women/63.jpg", profileUrl: "#" },
-  { imageUrl: "https://randomuser.me/api/portraits/men/75.jpg", profileUrl: "#" },
+  { imageUrl: "/images/avatars/men-32.jpg", profileUrl: "#" },
+  { imageUrl: "/images/avatars/women-44.jpg", profileUrl: "#" },
+  { imageUrl: "/images/avatars/men-52.jpg", profileUrl: "#" },
+  { imageUrl: "/images/avatars/women-63.jpg", profileUrl: "#" },
+  { imageUrl: "/images/avatars/men-75.jpg", profileUrl: "#" },
 ];
 
 /* ─── CTA Block 1 — Tailwind Dark with Image ─── */
@@ -110,6 +110,8 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
                 height="1080"
                 src="/images/volkan-arbeit.jpeg"
                 alt="Volkan bei der Arbeit am Fahrzeug"
+                loading="lazy"
+                decoding="async"
                 className="absolute top-0 left-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10 object-cover"
               />
             </div>
@@ -187,7 +189,7 @@ const testimonials = [
     amount: "7.340 €",
     name: "Mehmet K.",
     initials: "MK",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    avatar: "/images/avatars/men-32.jpg",
     car: "Mercedes E-Klasse · Auffahrunfall · Köln",
   },
   {
@@ -195,7 +197,7 @@ const testimonials = [
     amount: "5.890 €",
     name: "Sarah L.",
     initials: "SL",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    avatar: "/images/avatars/women-44.jpg",
     car: "BMW 430d · Seitenschaden · Düsseldorf",
   },
   {
@@ -203,7 +205,7 @@ const testimonials = [
     amount: "8.120 €",
     name: "Thomas W.",
     initials: "TW",
-    avatar: "https://randomuser.me/api/portraits/men/52.jpg",
+    avatar: "/images/avatars/men-52.jpg",
     car: "VW Tiguan · Frontschaden · Bonn",
   },
   {
@@ -211,7 +213,7 @@ const testimonials = [
     amount: "6.200 €",
     name: "Aylin D.",
     initials: "AD",
-    avatar: "https://randomuser.me/api/portraits/women/63.jpg",
+    avatar: "/images/avatars/women-63.jpg",
     car: "Audi A6 · Auffahrunfall · Leverkusen",
   },
 ];
@@ -310,8 +312,9 @@ export default function Home() {
             <FadeIn delay={0.3} className="hidden lg:block">
               <div className="relative">
                 <img
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/VtOdbmMhXqgtbbAu.jpg"
+                  src="/images/volkan-arbeit.jpeg"
                   alt="KFZ Gutachter bei der Arbeit"
+                  decoding="async"
                   className="rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.15)] w-full object-cover aspect-[4/3]"
                 />
                 {/* Floating badge */}
@@ -371,12 +374,12 @@ export default function Home() {
         </div>
         <Marquee className="[--gap:3rem] [--duration:30s]" pauseOnHover>
           {[
-            { name: "Mercedes-Benz", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/epDMZGjXANDAgRsB.svg" },
-            { name: "BMW", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/gYMuMsjYvVXtnUmN.svg" },
-            { name: "Volkswagen", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/cZnovLQLAKafjERL.svg" },
-            { name: "Audi", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/WkuYlkKcWeRHpxso.svg" },
-            { name: "Toyota", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/rctMSVzfcxHgkXhE.svg" },
-            { name: "Ford", url: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/oeZablNWjwFAEHoX.svg" },
+            { name: "Mercedes-Benz", url: "/images/brands/mercedes.svg" },
+            { name: "BMW", url: "/images/brands/bmw.svg" },
+            { name: "Volkswagen", url: "/images/brands/volkswagen.svg" },
+            { name: "Audi", url: "/images/brands/audi.svg" },
+            { name: "Toyota", url: "/images/brands/toyota.svg" },
+            { name: "Ford", url: "/images/brands/ford.svg" },
           ].map((brand) => (
             <img
               key={brand.name}
@@ -668,7 +671,7 @@ export default function Home() {
       </section>
 
       {/* ─── 5b. ELFSIGHT GOOGLE REVIEWS ─── */}
-      <section className="py-12 md:py-16 bg-[#F7F7F7]">
+      <section id="bewertungen" className="py-12 md:py-16 bg-[#F7F7F7]">
         <div className="container">
           <FadeIn>
             <div className="text-center mb-8">
@@ -811,13 +814,15 @@ export default function Home() {
       </section>
 
       {/* ─── 8. FOUNDER ─── */}
-      <section className="py-12 md:py-24 bg-white">
+      <section id="gutachter" className="py-12 md:py-24 bg-white">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
             <FadeIn>
               <div className="relative">
                 <img
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663370501707/VfFEuiRZHnDOBbQj.jpeg"
+                  src="/images/volkan-shooting.jpeg"
+                  loading="lazy"
+                  decoding="async"
                   alt="Volkan, Gründer Augustiner KFZ"
                   className="rounded-2xl shadow-[0_16px_64px_rgba(0,0,0,0.12)] w-full object-cover object-top aspect-[3/4] md:aspect-[4/5]"
                 />
@@ -925,6 +930,8 @@ export default function Home() {
                   <div className="relative overflow-hidden">
                     <img
                       src={c.image}
+                      loading="lazy"
+                      decoding="async"
                       alt={`${c.car} ${c.type}`}
                       className="w-full h-40 md:h-52 object-cover"
                     />
