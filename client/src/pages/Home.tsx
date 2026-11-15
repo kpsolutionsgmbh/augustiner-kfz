@@ -297,8 +297,11 @@ export default function Home() {
               <FadeIn delay={0.3}>
                 <div className="flex flex-col sm:flex-row gap-3 mb-4">
                   <a href="tel:+4915141621062" className="btn-primary !text-sm md:!text-base !px-5 md:!px-7 !py-3 md:!py-3.5">
-                    <Phone className="w-4 h-4" />
-                    +49 1514 1621062
+                    <Phone className="w-4 h-4 shrink-0" />
+                    <span className="flex flex-col items-start leading-tight">
+                      <span>+49 1514 1621062</span>
+                      <span className="text-[11px] md:text-xs font-medium opacity-80">Kostenfreie Soforthilfe</span>
+                    </span>
                   </a>
                   <button onClick={() => setFunnelOpen(true)} className="btn-dark !py-3 md:!py-3.5 !px-5 md:!px-6 !text-sm">
                     Schadensmeldung in 60 Sekunden
