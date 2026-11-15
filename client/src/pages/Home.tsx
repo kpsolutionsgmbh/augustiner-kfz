@@ -311,7 +311,7 @@ export default function Home() {
                 {/* Google Trust Element */}
                 <a
                   href="#bewertungen"
-                  className="flex items-center justify-center sm:justify-start gap-2.5 pt-1"
+                  className="flex items-center justify-start gap-2.5 pt-1"
                 >
                   <svg viewBox="0 0 48 48" className="w-6 h-6 shrink-0" aria-hidden="true">
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
