@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackEvent } from "@/lib/tracking";
 import { X, Car, Clock, Shield, ChevronRight, CheckCircle2, Loader2, Phone, User, Mail } from "lucide-react";
 
 interface FunnelModalProps {
@@ -24,7 +25,7 @@ const TIME_OPTIONS = [
 ];
 
 const FAULT_OPTIONS = [
-  { id: "gegner", label: "Der Unfallgegner", desc: "Sie wurden unverschuldet in den Unfall verwickelt" },
+  { id: "gegner", label: "Der Unfallgegner", desc: "Du wurdest unverschuldet in den Unfall verwickelt" },
   { id: "teilschuld", label: "Teilschuld", desc: "Beide Parteien tragen eine Mitschuld" },
   { id: "unklar", label: "Noch unklar", desc: "Die Schuldfrage ist noch nicht geklärt" },
 ];
@@ -59,12 +60,14 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
 
   const handleSubmit = async () => {
     setLoading(true);
+    let submitted = false;
     try {
-      await fetch("/api/leads", {
+      const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ accidentType, timeframe, fault, name, phone, email }),
       });
+      submitted = res.ok;
     } catch {
       // Silently fail — show success anyway so user isn't blocked
     }
@@ -72,6 +75,8 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
     setTimeout(() => {
       setLoading(false);
       setDone(true);
+      // Track only real, successful submissions — no personal data in the dataLayer
+      if (submitted) trackEvent("fragebogen_submit");
     }, 1500);
   };
 
@@ -126,7 +131,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                   >
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#767676] mb-2">Schritt 1 von 4</p>
                     <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0D] mb-1">Was ist passiert?</h3>
-                    <p className="text-sm text-[#767676] mb-6">Wählen Sie die Art des Unfalls aus.</p>
+                    <p className="text-sm text-[#767676] mb-6">Wähle die Art des Unfalls aus.</p>
                     <div className="grid grid-cols-2 gap-2.5">
                       {ACCIDENT_TYPES.map((type) => (
                         <button
@@ -154,7 +159,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                   >
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#767676] mb-2">Schritt 2 von 4</p>
                     <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0D] mb-1">Wann war der Unfall?</h3>
-                    <p className="text-sm text-[#767676] mb-6">Je schneller das Gutachten erstellt wird, desto besser Ihre Position.</p>
+                    <p className="text-sm text-[#767676] mb-6">Je schneller das Gutachten erstellt wird, desto besser deine Position.</p>
                     <div className="space-y-3">
                       {TIME_OPTIONS.map((opt) => (
                         <button
@@ -185,7 +190,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                   >
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#767676] mb-2">Schritt 3 von 4</p>
                     <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0D] mb-1">Wer war schuld?</h3>
-                    <p className="text-sm text-[#767676] mb-6">Keine Sorge — auch bei unklarer Schuldfrage helfen wir Ihnen.</p>
+                    <p className="text-sm text-[#767676] mb-6">Keine Sorge — auch bei unklarer Schuldfrage helfen wir dir.</p>
                     <div className="space-y-3">
                       {FAULT_OPTIONS.map((opt) => (
                         <button
@@ -216,7 +221,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                   >
                     <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#767676] mb-2">Schritt 4 von 4</p>
                     <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0D] mb-1">Fast geschafft!</h3>
-                    <p className="text-sm text-[#767676] mb-6">Hinterlassen Sie Ihre Kontaktdaten — wir melden uns innerhalb von 30 Minuten.</p>
+                    <p className="text-sm text-[#767676] mb-6">Hinterlasse deine Kontaktdaten — wir melden uns innerhalb von 30 Minuten.</p>
                     <div className="space-y-4">
                       <div>
                         <label className="block text-sm font-semibold text-[#1A1A1A] mb-1.5">Name *</label>
@@ -226,7 +231,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Ihr vollständiger Name"
+                            placeholder="Dein vollständiger Name"
                             className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
                           />
                         </div>
@@ -252,7 +257,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Ihre E-Mail-Adresse"
+                            placeholder="Deine E-Mail-Adresse"
                             className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-[#E8E8E8] text-sm focus:border-[#EBEB02] focus:outline-none transition-colors"
                           />
                         </div>
@@ -285,7 +290,7 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                     className="py-12 text-center"
                   >
                     <Loader2 className="w-12 h-12 mx-auto text-[#EBEB02] animate-spin mb-6" />
-                    <h3 className="text-xl font-extrabold text-[#0D0D0D] mb-2">Ihre Anfrage wird verarbeitet...</h3>
+                    <h3 className="text-xl font-extrabold text-[#0D0D0D] mb-2">Deine Anfrage wird verarbeitet...</h3>
                     <div className="space-y-3 mt-6">
                       {[
                         { icon: Car, text: "Unfalltyp erfasst" },
@@ -324,11 +329,11 @@ export function FunnelModal({ open, onClose }: FunnelModalProps) {
                     </motion.div>
                     <h3 className="text-2xl font-extrabold text-[#0D0D0D] mb-2">Vielen Dank, {name.split(" ")[0]}!</h3>
                     <p className="text-[#4A4A4A] mb-6 max-w-sm mx-auto">
-                      Unser Team meldet sich innerhalb von 30 Minuten bei Ihnen — kostenlos und unverbindlich.
+                      Unser Team meldet sich innerhalb von 30 Minuten bei dir — kostenlos und unverbindlich.
                     </p>
                     <div className="bg-[#F7F7F7] rounded-xl p-4 mb-6 text-sm text-left max-w-xs mx-auto space-y-2">
                       <p className="font-semibold text-[#0D0D0D]">Was passiert jetzt?</p>
-                      <p className="text-[#4A4A4A]">1. Wir rufen Sie unter <strong>{phone}</strong> an</p>
+                      <p className="text-[#4A4A4A]">1. Wir rufen dich unter <strong>{phone}</strong> an</p>
                       <p className="text-[#4A4A4A]">2. Kostenlose Erstberatung durch Master-Ingenieur</p>
                       <p className="text-[#4A4A4A]">3. Schadenaufnahme innerhalb von 24 Stunden</p>
                     </div>

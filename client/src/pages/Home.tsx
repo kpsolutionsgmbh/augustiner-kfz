@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { FunnelModal } from "@/components/FunnelModal";
+import { trackEvent } from "@/lib/tracking";
 import { Marquee } from "@/components/ui/marquee";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { ShineBorder } from "@/components/ui/shine-border";
@@ -82,10 +83,10 @@ function CTABlockPrimary({ onOpen }: { onOpen: () => void }) {
             </svg>
             <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
               <h2 className="text-3xl font-extrabold tracking-tight text-balance text-white sm:text-4xl">
-                Holen Sie sich, was Ihnen zusteht
+                Hol dir, was dir zusteht
               </h2>
               <p className="mt-6 text-lg leading-8 text-pretty text-gray-300">
-                Durchschnittlich 6.890 € statt nur 2.100 € vom Versicherer. Jeder Tag ohne Gutachten kostet Sie bares Geld.
+                Durchschnittlich 6.890 € statt nur 2.100 € vom Versicherer. Jeder Tag ohne Gutachten kostet dich bares Geld.
               </p>
               <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:gap-x-6 lg:items-center lg:justify-start">
                 <button onClick={onOpen} className="btn-primary !rounded-xl w-full sm:w-auto">
@@ -131,12 +132,12 @@ function CTABlockSecondary({ onOpen }: { onOpen: () => void }) {
       <div className="container relative text-center">
         <FadeIn>
           <h2 className="text-2xl md:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
-            Ihre Entschädigung wartet.<br />
-            <span className="text-[#EBEB02]">Holen Sie sie sich.</span>
+            Deine Entschädigung wartet.<br />
+            <span className="text-[#EBEB02]">Hol sie dir.</span>
           </h2>
           <p className="text-sm md:text-lg text-gray-400 max-w-xl mx-auto mb-8 md:mb-10">
             Durchschnittlich 6.890 €. Kostenlos, in 60 Sekunden gestartet.
-            Warten kostet Sie bares Geld.
+            Warten kostet dich bares Geld.
           </p>
           <button onClick={onOpen} className="btn-primary text-base md:text-lg !px-8 md:!px-10 !py-4 md:!py-5 !rounded-2xl">
             Jetzt Entschädigung sichern
@@ -220,6 +221,12 @@ const testimonials = [
 
 export default function Home() {
   const [funnelOpen, setFunnelOpen] = useState(false);
+  // Single entry point for every button that opens the funnel modal
+  const openFunnel = () => {
+    if (funnelOpen) return;
+    trackEvent("fragebogen_start");
+    setFunnelOpen(true);
+  };
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
   const heroInView = useInView(heroRef, { margin: "0px" });
@@ -234,7 +241,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar onOpenFunnel={() => setFunnelOpen(true)} />
+      <Navbar onOpenFunnel={openFunnel} />
       <FunnelModal open={funnelOpen} onClose={() => setFunnelOpen(false)} />
 
       {/* ─── 1. HERO with Particles ─── */}
@@ -261,7 +268,7 @@ export default function Home() {
 
               <FadeIn delay={0.2}>
                 <p className="text-sm md:text-lg text-[#4A4A4A] leading-relaxed mb-5 md:mb-6 max-w-lg">
-                  Prüfen Sie in 60 Sekunden, wie viel Entschädigung Ihnen nach dem Unfall wirklich zusteht.
+                  Prüfe in 60 Sekunden, wie viel Entschädigung dir nach dem Unfall wirklich zusteht.
                 </p>
               </FadeIn>
 
@@ -292,7 +299,7 @@ export default function Home() {
                       <span className="text-[11px] md:text-xs font-medium opacity-80">Kostenfreie Soforthilfe</span>
                     </span>
                   </a>
-                  <button onClick={() => setFunnelOpen(true)} className="btn-dark !py-3 md:!py-3.5 !px-5 md:!px-6 !text-sm">
+                  <button onClick={openFunnel} className="btn-dark !py-3 md:!py-3.5 !px-5 md:!px-6 !text-sm">
                     Schadensmeldung in 60 Sekunden
                     <ArrowRight className="w-4 h-4" />
                   </button>
@@ -355,11 +362,11 @@ export default function Home() {
           {/* Glassmorphism Stats */}
           <FadeIn delay={0.5} className="mt-8 md:mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {[
-              { value: 6890, prefix: "Ø ", suffix: " €", label: "Entschädigung", icon: "💰" },
-              { value: 35, suffix: " %", label: "Mehr als Versicherung", icon: "📈" },
-              { value: 24, suffix: "h", label: "Schadenaufnahme", icon: "⚡" },
-              { value: 74, suffix: "+", label: "5-Sterne Bewertungen", icon: "⭐" },
-            ].map((stat, i) => (
+              { value: 6890, prefix: "Ø ", suffix: " €", label: "Entschädigung für dich" },
+              { value: 35, prefix: "+", suffix: " %", label: "höhere Entschädigung als Versicherungsgutachter" },
+              { text: "24/7", label: "erreichbare Soforthilfe" },
+              { value: 0, suffix: " €", label: "Kosten für dich" },
+            ].map((stat) => (
               <motion.div
                 key={stat.label}
                 whileHover={{ y: -4, scale: 1.02 }}
@@ -369,9 +376,13 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-[#EBEB02]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <ShineBorder shineColor={["#EBEB02", "#22C55E"]} borderWidth={1} duration={8} />
                 <p className="text-xl md:text-3xl font-black text-[#0D0D0D] relative">
-                  {stat.prefix}
-                  <NumberTicker value={stat.value} />
-                  {stat.suffix}
+                  {stat.text ?? (
+                    <>
+                      {stat.prefix}
+                      <NumberTicker value={stat.value ?? 0} />
+                      {stat.suffix}
+                    </>
+                  )}
                 </p>
                 <p className="text-[10px] md:text-xs font-medium text-[#767676] mt-1 relative">{stat.label}</p>
               </motion.div>
@@ -472,10 +483,10 @@ export default function Home() {
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Das Problem</SectionLabel>
               <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
-                Die Versicherung arbeitet nicht für Sie
+                Die Versicherung arbeitet nicht für dich
               </h2>
               <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
-                Nach einem Unfall sind Sie im Nachteil. Die gegnerische Versicherung weiß das und nutzt es aus.
+                Nach einem Unfall bist du im Nachteil. Die gegnerische Versicherung weiß das und nutzt es aus.
               </p>
             </div>
           </FadeIn>
@@ -498,7 +509,7 @@ export default function Home() {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-[#0D0D0D] mb-3">Versicherung kürzt systematisch</h3>
                   <p className="text-sm md:text-base text-[#4A4A4A] leading-relaxed max-w-lg">
-                    Der Gutachter der Versicherung arbeitet für die Versicherung. Nicht für Sie. Ergebnis: Tausende Euro weniger Entschädigung.
+                    Der Gutachter der Versicherung arbeitet für die Versicherung. Nicht für dich. Ergebnis: Tausende Euro weniger Entschädigung.
                   </p>
                   {/* Animated counter showing money loss */}
                   <div className="mt-5 flex items-center gap-3">
@@ -521,7 +532,7 @@ export default function Home() {
                 </motion.div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Positionen verschwiegen</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Wertminderung, Nutzungsausfall, Mietwagenkosten. Die Versicherung verschweigt Ihnen, was Ihnen zusteht.
+                  Wertminderung, Nutzungsausfall, Mietwagenkosten. Die Versicherung verschweigt dir, was dir zusteht.
                 </p>
                 {/* Animated strikethrough list */}
                 <div className="mt-4 space-y-1.5">
@@ -559,7 +570,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Zeitdruck wird aufgebaut</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Schnelle Angebote, schnelle Unterschrift. Auf Ihre Kosten.
+                  Schnelle Angebote, schnelle Unterschrift. Auf deine Kosten.
                 </p>
               </div>
             </ScaleIn>
@@ -575,9 +586,9 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-xl bg-[#EBEB02]/10 flex items-center justify-center mb-4 group-hover:bg-[#EBEB02]/20 transition-colors">
                   <Timer className="w-6 h-6 text-[#0D0D0D]" />
                 </div>
-                <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Jeder Tag schwächt Ihre Position</h3>
+                <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Jeder Tag schwächt deine Position</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Ohne professionelles Gutachten verlieren Sie Beweise. Je länger Sie warten, desto schwieriger.
+                  Ohne professionelles Gutachten verlierst du Beweise. Je länger du wartest, desto schwieriger.
                 </p>
               </div>
             </ScaleIn>
@@ -589,7 +600,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-lg font-bold text-[#0D0D0D] mb-2">Kein faires Verfahren</h3>
                 <p className="text-sm text-[#4A4A4A] leading-relaxed">
-                  Die Versicherung hat Juristen und Gutachter. Sie stehen allein da. Es sei denn, Sie holen sich einen Experten.
+                  Die Versicherung hat Juristen und Gutachter. Du stehst allein da. Es sei denn, du holst dir einen Experten.
                 </p>
                 {/* Animated scale tipping */}
                 <motion.div
@@ -606,7 +617,7 @@ export default function Home() {
       </section>
 
       {/* ─── CTA Block 1 ─── */}
-      <CTABlockPrimary onOpen={() => setFunnelOpen(true)} />
+      <CTABlockPrimary onOpen={openFunnel} />
 
       {/* ─── 5. VALUE / LEISTUNGEN — Shine Border Cards ─── */}
       <section id="leistungen" className="py-12 md:py-24 bg-white overflow-hidden">
@@ -615,7 +626,7 @@ export default function Home() {
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Unsere Lösung</SectionLabel>
               <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
-                Wir übernehmen alles. Sie lehnen sich zurück.
+                Wir übernehmen alles. Du lehnst dich zurück.
               </h2>
               <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
                 Von der Schadenaufnahme bis zur Auszahlung. Kostenlos. Komplett.
@@ -629,27 +640,27 @@ export default function Home() {
                 icon: FileCheck,
                 title: "Kostenloses Unfallgutachten",
                 desc: "Professionelles Gutachten mit allen 16 regulierbaren Schadenspositionen. Rechtlich belastbar und gerichtsfest. Die Versicherung zahlt.",
-                tag: "0 € für Sie",
+                tag: "0 € für dich",
                 shiny: true,
               },
               {
                 icon: Shield,
                 title: "Versicherungskommunikation inklusive",
-                desc: "Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Sie müssen nicht einen einzigen Brief schreiben.",
+                desc: "Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Du musst nicht einen einzigen Brief schreiben.",
                 tag: "Alles aus einer Hand",
                 shiny: false,
               },
               {
                 icon: Scale,
                 title: "Kostenloser Anwalt bei Bedarf",
-                desc: "Wenn die Versicherung nicht zahlt, schalten wir einen spezialisierten Verkehrsrechtsanwalt ein. Für Sie kostenlos (§ 249 BGB).",
+                desc: "Wenn die Versicherung nicht zahlt, schalten wir einen spezialisierten Verkehrsrechtsanwalt ein. Für dich kostenlos (§ 249 BGB).",
                 tag: "Kostenlos",
                 shiny: false,
               },
               {
                 icon: Clock,
                 title: "Schadenaufnahme in 24 Stunden",
-                desc: "Innerhalb von 24 Stunden kommt unser Gutachter zu Ihnen. An Ihren Standort, zu Ihrer Wunschzeit. Auszahlung in Ø 7 bis 19 Tagen.",
+                desc: "Innerhalb von 24 Stunden kommt unser Gutachter zu dir. An deinen Standort, zu deiner Wunschzeit. Auszahlung in Ø 7 bis 19 Tagen.",
                 tag: "24/7 erreichbar",
                 shiny: false,
               },
@@ -710,10 +721,10 @@ export default function Home() {
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>So funktioniert's</SectionLabel>
               <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
-                In 3 Schritten zu Ihrer Entschädigung
+                In 3 Schritten zu deiner Entschädigung
               </h2>
               <p className="text-sm md:text-lg text-[#4A4A4A] max-w-2xl mx-auto">
-                Wir nehmen Ihnen alles ab. Sie machen nur den ersten Schritt.
+                Wir nehmen dir alles ab. Du machst nur den ersten Schritt.
               </p>
             </div>
           </FadeIn>
@@ -733,7 +744,7 @@ export default function Home() {
               {
                 step: "03",
                 title: "Auszahlung erhalten",
-                desc: "Durchschnittlich 6.890 € auf Ihr Konto. In Ø 7 bis 19 Tagen. 35 % mehr als das Versicherungsangebot.",
+                desc: "Durchschnittlich 6.890 € auf dein Konto. In Ø 7 bis 19 Tagen. 35 % mehr als das Versicherungsangebot.",
               },
             ].map((item, i) => (
               <FadeIn key={item.step} delay={i * 0.15}>
@@ -750,7 +761,7 @@ export default function Home() {
 
           <FadeIn delay={0.4}>
             <div className="text-center mt-10 md:mt-12">
-              <button onClick={() => setFunnelOpen(true)} className="btn-primary text-base md:text-lg !px-8 md:!px-10 !py-4 md:!py-5">
+              <button onClick={openFunnel} className="btn-primary text-base md:text-lg !px-8 md:!px-10 !py-4 md:!py-5">
                 Jetzt in 60 Sekunden starten
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -770,7 +781,7 @@ export default function Home() {
                 Versicherungs-Gutachter vs. Augustiner KFZ
               </h2>
               <p className="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto">
-                Sehen Sie selbst, warum ein unabhängiges Gutachten Tausende Euro Unterschied macht.
+                Sieh selbst, warum ein unabhängiges Gutachten Tausende Euro Unterschied macht.
               </p>
             </div>
           </FadeIn>
@@ -795,12 +806,12 @@ export default function Home() {
                 </div>
               </div>
               {[
-                { label: "Arbeitet für", bad: "Die Versicherung", good: "Nur für Sie" },
+                { label: "Arbeitet für", bad: "Die Versicherung", good: "Nur für dich" },
                 { label: "Ø Entschädigung", bad: "2.100 € (gekürzt)", good: "6.890 € (vollständig)" },
                 { label: "Schadenspositionen", bad: "Minimal", good: "Alle 16 Positionen" },
-                { label: "Versicherungs-Kommunikation", bad: "Sie selbst", good: "Wir übernehmen alles" },
+                { label: "Versicherungs-Kommunikation", bad: "Du selbst", good: "Wir übernehmen alles" },
                 { label: "Anwalt inklusive", bad: "Nein", good: "Ja, kostenlos" },
-                { label: "Kosten für Sie", bad: "Tausende € weniger", good: "0 €" },
+                { label: "Kosten für dich", bad: "Tausende € weniger", good: "0 €" },
               ].map((row, i) => (
                 <motion.div
                   key={row.label}
@@ -850,7 +861,7 @@ export default function Home() {
 
             <FadeIn delay={0.2}>
               <div>
-                <SectionLabel>Ihr Gutachter</SectionLabel>
+                <SectionLabel>Dein Gutachter</SectionLabel>
                 <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-6">
                   Volkan, Master-Ingenieur & Gründer
                 </h2>
@@ -870,7 +881,7 @@ export default function Home() {
                   ))}
                 </div>
                 <blockquote className="border-l-4 border-[#EBEB02] pl-4 text-[#4A4A4A] italic text-sm leading-relaxed">
-                  „Die Versicherung bietet immer das Minimum. Mein Job: sicherstellen, dass Sie das bekommen, was Ihnen rechtlich zusteht."
+                  „Die Versicherung bietet immer das Minimum. Mein Job: sicherstellen, dass du das bekommst, was dir rechtlich zusteht."
                 </blockquote>
               </div>
             </FadeIn>
@@ -879,7 +890,7 @@ export default function Home() {
       </section>
 
       {/* ─── CTA Block 2 ─── */}
-      <CTABlockSecondary onOpen={() => setFunnelOpen(true)} />
+      <CTABlockSecondary onOpen={openFunnel} />
 
       {/* ─── 9. CASE STUDIES — Enhanced Cards ─── */}
       <section id="faelle" className="py-12 md:py-24 bg-white">
@@ -1013,7 +1024,7 @@ export default function Home() {
             <div className="text-center mb-8 md:mb-16">
               <SectionLabel>Häufige Fragen</SectionLabel>
               <h2 className="text-[22px] md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0D] mt-4 mb-4">
-                Alles, was Sie wissen müssen
+                Alles, was du wissen musst
               </h2>
             </div>
           </FadeIn>
@@ -1024,7 +1035,7 @@ export default function Home() {
                 {[
                   {
                     q: "Ist das Gutachten wirklich kostenlos?",
-                    a: "Ja, zu 100 %. Nach § 249 BGB und BGH Az. VI ZR 357/13 muss die gegnerische Versicherung die Kosten für das Unfallgutachten übernehmen. Ihnen entstehen keinerlei Kosten. Nicht beim Gutachten, nicht beim Anwalt, nicht bei der gesamten Abwicklung.",
+                    a: "Ja, zu 100 %. Nach § 249 BGB und BGH Az. VI ZR 357/13 muss die gegnerische Versicherung die Kosten für das Unfallgutachten übernehmen. Dir entstehen keinerlei Kosten. Nicht beim Gutachten, nicht beim Anwalt, nicht bei der gesamten Abwicklung.",
                   },
                   {
                     q: "Warum bekomme ich mehr als das Versicherungsangebot?",
@@ -1036,18 +1047,18 @@ export default function Home() {
                   },
                   {
                     q: "Muss ich selbst mit der Versicherung kommunizieren?",
-                    a: "Nein. Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Bei Bedarf schalten wir zusätzlich einen spezialisierten Verkehrsrechtsanwalt ein. Für Sie kostenlos.",
+                    a: "Nein. Wir übernehmen die komplette Kommunikation mit der gegnerischen Versicherung. Bei Bedarf schalten wir zusätzlich einen spezialisierten Verkehrsrechtsanwalt ein. Für dich kostenlos.",
                   },
                   {
                     q: "Kann ich den Gutachter frei wählen?",
-                    a: "Ja, absolut. Als Geschädigter haben Sie das Recht, einen eigenen, unabhängigen Gutachter zu beauftragen. Die Versicherung darf Ihnen keinen Gutachter vorschreiben. Dieses Recht ist gesetzlich verankert.",
+                    a: "Ja, absolut. Als Geschädigter hast du das Recht, einen eigenen, unabhängigen Gutachter zu beauftragen. Die Versicherung darf dir keinen Gutachter vorschreiben. Dieses Recht ist gesetzlich verankert.",
                   },
                   {
                     q: "Was passiert, wenn die Versicherung nicht zahlt?",
-                    a: "Dann schalten wir einen spezialisierten Verkehrsrechtsanwalt ein, der Ihre Ansprüche gerichtlich durchsetzt. Auch diese Kosten werden von der gegnerischen Versicherung getragen. Ihnen entstehen keine Kosten.",
+                    a: "Dann schalten wir einen spezialisierten Verkehrsrechtsanwalt ein, der deine Ansprüche gerichtlich durchsetzt. Auch diese Kosten werden von der gegnerischen Versicherung getragen. Dir entstehen keine Kosten.",
                   },
                   {
-                    q: "Sind Sie wirklich unabhängig?",
+                    q: "Seid ihr wirklich unabhängig?",
                     a: "Ja. Augustiner KFZ hat keinerlei Verträge mit Versicherungen. Wir arbeiten ausschließlich im Interesse des Geschädigten. Unser Gründer Volkan hat einen Master in Automotive Engineering und ist keiner Versicherung verpflichtet.",
                   },
                 ].map((faq, i) => (
@@ -1077,13 +1088,13 @@ export default function Home() {
         <div className="container relative text-center">
           <FadeIn>
             <h2 className="text-2xl md:text-5xl font-black text-white mb-4 md:mb-6 leading-tight">
-              Sie haben Anspruch auf mehr.<br />
-              <span className="text-[#EBEB02]">Lassen Sie sich das nicht nehmen.</span>
+              Du hast Anspruch auf mehr.<br />
+              <span className="text-[#EBEB02]">Lass dir das nicht nehmen.</span>
             </h2>
             <p className="text-sm md:text-lg text-gray-400 max-w-xl mx-auto mb-8 md:mb-10">
               Kostenloses Gutachten. In 60 Sekunden gestartet. Durchschnittlich 6.890 €.
             </p>
-            <button onClick={() => setFunnelOpen(true)} className="btn-primary text-lg md:text-xl !px-10 md:!px-12 !py-5 md:!py-6 !rounded-2xl">
+            <button onClick={openFunnel} className="btn-primary text-lg md:text-xl !px-10 md:!px-12 !py-5 md:!py-6 !rounded-2xl">
               Jetzt Entschädigung sichern
               <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
             </button>

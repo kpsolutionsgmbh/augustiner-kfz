@@ -40,7 +40,7 @@ export function CookieBanner() {
                 <div className="flex-1">
                   <p className="text-sm font-semibold text-white mb-1">Wir verwenden Cookies</p>
                   <p className="text-xs text-gray-400 leading-relaxed">
-                    Wir setzen auf dieser Internetseite Cookies ein, um Ihnen die bestmögliche Erfahrung zu bieten.{" "}
+                    Wir setzen auf dieser Internetseite Cookies ein, um dir die bestmögliche Erfahrung zu bieten.{" "}
                     <Link href="/datenschutz" className="underline hover:text-white transition-colors">
                       Mehr erfahren
                     </Link>
